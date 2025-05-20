@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Running spotless check"
+if ./gradlew spotlessCheck; then
+    echo "Spotless check succeed"
+else
+    echo "Spotless check failed" >&2
+    exit 1
+fi
