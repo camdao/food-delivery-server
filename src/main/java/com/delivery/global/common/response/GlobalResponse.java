@@ -1,4 +1,4 @@
-package com.delivery.global.response;
+package com.delivery.global.common.response;
 
 import com.delivery.global.erro.ErrorResponse;
 import java.time.LocalDateTime;
