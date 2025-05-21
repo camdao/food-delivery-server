@@ -1,3 +1,20 @@
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      base-path: /delivery-actuator
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    health:
+      show-details: never
+  individual:
+    health:
+
+#Swagger
 swagger:
   version: 0.0.1
 
