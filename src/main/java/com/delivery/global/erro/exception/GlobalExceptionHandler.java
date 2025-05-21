@@ -1,7 +1,7 @@
 package com.delivery.global.erro.exception;
 
+import com.delivery.global.common.response.GlobalResponse;
 import com.delivery.global.erro.ErrorResponse;
-import com.delivery.global.response.GlobalResponse;
 import jakarta.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;

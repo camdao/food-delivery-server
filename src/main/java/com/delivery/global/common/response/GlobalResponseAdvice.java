@@ -1,4 +1,4 @@
-package com.delivery.global.response;
+package com.delivery.global.common.response;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.MethodParameter;
