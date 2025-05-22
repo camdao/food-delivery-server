@@ -1,4 +1,4 @@
-package com.delivery.global.erro.exception;
+package com.delivery.global.config.erro.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +15,9 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "The HTTP method is not supported."),
     INTERNAL_SERVER_ERROR(
             HttpStatus.INTERNAL_SERVER_ERROR, "Server error, please contact your administrator"),
-    ;
 
+    // Member
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found.");
     private final HttpStatus status;
     private final String message;
 }

@@ -1,4 +1,4 @@
-package com.delivery.global.erro;
+package com.delivery.global.config.erro;
 
 public record ErrorResponse(String errorClassName, String message) {
 
