@@ -1,10 +1,13 @@
 package com.delivery;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@Slf4j
 public class NoTransactionExtension implements BeforeEachCallback {
 
     @Override
@@ -14,6 +17,10 @@ public class NoTransactionExtension implements BeforeEachCallback {
     }
 
     private static void cleanDatabase(ApplicationContext applicationContext) {
-        DatabaseCleaner.clear(applicationContext);
+        try {
+            DatabaseCleaner.clear(applicationContext);
+        } catch (NoSuchBeanDefinitionException e) {
+            log.debug("Database Cleaning not supported.");
+        }
     }
 }
