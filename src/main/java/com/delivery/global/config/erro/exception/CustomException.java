@@ -1,4 +1,4 @@
-package com.delivery.global.erro.exception;
+package com.delivery.global.config.erro.exception;
 
 import lombok.Getter;
 

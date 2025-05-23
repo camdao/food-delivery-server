@@ -1,6 +1,6 @@
 package com.delivery.global.common.response;
 
-import com.delivery.global.erro.ErrorResponse;
+import com.delivery.global.config.erro.ErrorResponse;
 import java.time.LocalDateTime;
 
 public record GlobalResponse(boolean success, int status, Object data, LocalDateTime timestamp) {
