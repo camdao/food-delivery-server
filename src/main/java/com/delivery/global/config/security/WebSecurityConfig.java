@@ -22,6 +22,11 @@ public class WebSecurityConfig {
                                         .permitAll()
                                         .requestMatchers("/v1/**")
                                         .permitAll()
+                                        .requestMatchers(
+                                                "/swagger-resources/**",
+                                                "/swagger-ui/**",
+                                                "/v3/api-docs/**")
+                                        .permitAll()
                                         .anyRequest()
                                         .authenticated())
                 .build();
