@@ -1,11 +1,7 @@
 package com.delivery.domain.food.domain;
 
 import com.delivery.domain.model.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,14 +22,23 @@ public class Food extends BaseTimeEntity {
 
     String foodImage;
 
+    @Enumerated(EnumType.STRING)
+    private FoodStatus status;
+
     @Builder(access = AccessLevel.PRIVATE)
-    private Food(String name, Long price, String foodImage) {
+    private Food(String name, Long price, String foodImage, FoodStatus status) {
         this.name = name;
         this.price = price;
         this.foodImage = foodImage;
+        this.status = status;
     }
 
     public static Food createFood(String name, Long price, String foodImage) {
-        return Food.builder().name(name).price(price).foodImage(foodImage).build();
+        return Food.builder()
+                .name(name)
+                .price(price)
+                .foodImage(foodImage)
+                .status(FoodStatus.AVAILABLE)
+                .build();
     }
 }
