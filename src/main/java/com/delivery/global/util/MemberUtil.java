@@ -13,7 +13,6 @@ public class MemberUtil {
     private final SecurityUtil securityUtil;
     private final MemberRepository memberRepository;
 
-    // TODO: Delete after database connection and fixture data insertion
     private void insertMockMemberIfNotExist() {
         if (memberRepository.count() != 0) {
             return;

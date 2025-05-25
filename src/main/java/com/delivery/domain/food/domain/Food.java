@@ -16,11 +16,11 @@ public class Food extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
-    String name;
+    private String name;
 
-    Long price;
+    private Long price;
 
-    String foodImage;
+    private String foodImage;
 
     @Enumerated(EnumType.STRING)
     private FoodStatus status;
@@ -33,12 +33,7 @@ public class Food extends BaseTimeEntity {
         this.status = status;
     }
 
-    public static Food createFood(String name, Long price, String foodImage) {
-        return Food.builder()
-                .name(name)
-                .price(price)
-                .foodImage(foodImage)
-                .status(FoodStatus.AVAILABLE)
-                .build();
+    public static Food createFood(String name, Long price) {
+        return Food.builder().name(name).price(price).status(FoodStatus.AVAILABLE).build();
     }
 }
