@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Food extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "food_id")
     private Long id;
 
     private String name;
