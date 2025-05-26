@@ -42,4 +42,10 @@ public class Food extends BaseTimeEntity {
     public static Food createFood(String name, Long price, Member member) {
         return Food.builder().name(name).price(price).status(FoodStatus.AVAILABLE).build();
     }
+
+    public void updateFood(String name, Long price, FoodStatus status) {
+        this.name = name;
+        this.price = price;
+        this.status = status;
+    }
 }

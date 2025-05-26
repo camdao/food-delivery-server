@@ -3,9 +3,13 @@ package com.delivery.domain.food.application;
 import com.delivery.domain.food.dao.FoodRepository;
 import com.delivery.domain.food.domain.Food;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
+import com.delivery.domain.food.dto.request.FoodUpdateRequest;
 import com.delivery.domain.food.dto.response.FoodCreateResponse;
 import com.delivery.domain.food.dto.response.FoodFindAllResponse;
+import com.delivery.domain.food.dto.response.FoodUpdateResponse;
 import com.delivery.domain.member.domain.Member;
+import com.delivery.global.config.erro.exception.CustomException;
+import com.delivery.global.config.erro.exception.ErrorCode;
 import com.delivery.global.util.MemberUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,5 +43,15 @@ public class FoodService {
             results.add(FoodFindAllResponse.from(food));
         }
         return results;
+    }
+
+    public FoodUpdateResponse updateFood(FoodUpdateRequest updateRequest, Long foodId) {
+        Food food =
+                foodRepository
+                        .findById(foodId)
+                        .orElseThrow(() -> new CustomException(ErrorCode.Mission_NOT_FOUND));
+
+        food.updateFood(updateRequest.name(), updateRequest.price(), updateRequest.status());
+        return FoodUpdateResponse.from(food);
     }
 }
