@@ -21,13 +21,15 @@ public class MemberUtilTest {
     @Test
     void get_information_of_currently_logged_in_member() {
         // given
-        PrincipalDetails principal = new PrincipalDetails(1L, "USER");
+        Member member = Member.createNormalMember("test");
+        Member savedMember = memberRepository.save(member);
+
+        PrincipalDetails principal = new PrincipalDetails(savedMember.getId(), "USER");
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
                         principal, "password", principal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Member member = Member.createNormalMember("test");
-        Member savedMember = memberRepository.save(member);
+
         // when
         Member currentMember = memberUtil.getCurrentMember();
         // then
