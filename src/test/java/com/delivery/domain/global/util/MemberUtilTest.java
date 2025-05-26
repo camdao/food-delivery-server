@@ -4,18 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.delivery.global.util.SecurityUtil;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 public class MemberUtilTest {
-    @MockitoBean private SecurityUtil securityUtil;
+    @Autowired private SecurityUtil securityUtil;
 
     @Test
     void get_Current_Member() {
         // given
         Long memberId = securityUtil.getCurrentMemberId();
         // then,when
-        assertEquals(memberId, 0L);
+        assertEquals(memberId, 1L);
     }
 }
