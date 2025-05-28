@@ -86,20 +86,18 @@ public class FoodServiceTest {
                         tuple(4L, "name", 3L),
                         tuple(5L, "name", 4L));
     }
-	@Test
-	void update_a_food(){
-		//given
-		FoodUpdateRequest foodUpdateRequest = new FoodUpdateRequest("name", 1L, FoodStatus.DISCONTINUED);
-		Food food = foodRepository.save(
-				Food.createFood(
-					"name",
-					1L,
-					memberUtil.getCurrentMember()));
-		//then
-		FoodUpdateResponse foodUpdateResponse =foodService.updateFood(foodUpdateRequest,food.getId());
-		//when
-		assertNotNull(foodUpdateResponse);
-		assertEquals(FoodStatus.DISCONTINUED, foodUpdateResponse.status());
 
-	}
+    @Test
+    void update_a_food() {
+        // given
+        FoodUpdateRequest foodUpdateRequest =
+                new FoodUpdateRequest("name", 1L, FoodStatus.DISCONTINUED);
+        Food food = foodRepository.save(Food.createFood("name", 1L, memberUtil.getCurrentMember()));
+        // then
+        FoodUpdateResponse foodUpdateResponse =
+                foodService.updateFood(foodUpdateRequest, food.getId());
+        // when
+        assertNotNull(foodUpdateResponse);
+        assertEquals(FoodStatus.DISCONTINUED, foodUpdateResponse.status());
+    }
 }
