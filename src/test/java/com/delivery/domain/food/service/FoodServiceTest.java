@@ -6,9 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.delivery.domain.food.application.FoodService;
 import com.delivery.domain.food.dao.FoodRepository;
 import com.delivery.domain.food.domain.Food;
+import com.delivery.domain.food.domain.FoodStatus;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
+import com.delivery.domain.food.dto.request.FoodUpdateRequest;
 import com.delivery.domain.food.dto.response.FoodCreateResponse;
 import com.delivery.domain.food.dto.response.FoodFindAllResponse;
+import com.delivery.domain.food.dto.response.FoodUpdateResponse;
 import com.delivery.domain.member.dao.MemberRepository;
 import com.delivery.domain.member.domain.Member;
 import com.delivery.global.config.security.PrincipalDetails;
@@ -83,4 +86,20 @@ public class FoodServiceTest {
                         tuple(4L, "name", 3L),
                         tuple(5L, "name", 4L));
     }
+	@Test
+	void update_a_food(){
+		//given
+		FoodUpdateRequest foodUpdateRequest = new FoodUpdateRequest("name", 1L, FoodStatus.DISCONTINUED);
+		Food food = foodRepository.save(
+				Food.createFood(
+					"name",
+					1L,
+					memberUtil.getCurrentMember()));
+		//then
+		FoodUpdateResponse foodUpdateResponse =foodService.updateFood(foodUpdateRequest,food.getId());
+		//when
+		assertNotNull(foodUpdateResponse);
+		assertEquals(FoodStatus.DISCONTINUED, foodUpdateResponse.status());
+
+	}
 }
