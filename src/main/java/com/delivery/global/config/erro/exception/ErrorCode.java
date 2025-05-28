@@ -17,7 +17,10 @@ public enum ErrorCode {
             HttpStatus.INTERNAL_SERVER_ERROR, "Server error, please contact your administrator"),
 
     // Member
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found.");
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found."),
+
+    // mission
+    Mission_NOT_FOUND(HttpStatus.NOT_FOUND, "The mission could not be found.");
     private final HttpStatus status;
     private final String message;
 }

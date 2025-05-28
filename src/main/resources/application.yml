@@ -31,3 +31,12 @@ springdoc:
     syntax-highlight:
       theme: none
     urls-primary-name: Delivery API DOCS
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MODE=MYSQL
+
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000

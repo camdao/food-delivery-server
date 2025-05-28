@@ -2,20 +2,37 @@ package com.delivery.domain.global.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.delivery.global.util.SecurityUtil;
+import com.delivery.domain.member.dao.MemberRepository;
+import com.delivery.domain.member.domain.Member;
+import com.delivery.global.config.security.PrincipalDetails;
+import com.delivery.global.util.MemberUtil;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @SpringBootTest
 public class MemberUtilTest {
-    @MockitoBean private SecurityUtil securityUtil;
+    @Autowired private MemberUtil memberUtil;
+    @Autowired private MemberRepository memberRepository;
 
     @Test
-    void get_Current_Member() {
+    void get_information_of_currently_logged_in_member() {
         // given
-        Long memberId = securityUtil.getCurrentMemberId();
-        // then,when
-        assertEquals(memberId, 0L);
+        Member member = Member.createNormalMember("test");
+        Member savedMember = memberRepository.save(member);
+
+        PrincipalDetails principal = new PrincipalDetails(savedMember.getId(), "USER");
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(
+                        principal, "password", principal.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // when
+        Member currentMember = memberUtil.getCurrentMember();
+        // then
+        assertEquals(savedMember.getId(), currentMember.getId());
     }
 }
