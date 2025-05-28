@@ -73,7 +73,7 @@ public class FoodServiceTest {
         }
 
         // when
-        List<FoodFindAllResponse> foodList = foodService.FoodFindAll();
+        List<FoodFindAllResponse> foodList = foodService.findAllFood();
 
         // then
         assertThat(foodList.size()).isEqualTo(5);

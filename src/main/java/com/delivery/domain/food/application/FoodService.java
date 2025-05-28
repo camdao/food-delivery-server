@@ -33,7 +33,7 @@ public class FoodService {
     }
 
     @Transactional(readOnly = true)
-    public List<FoodFindAllResponse> FoodFindAll() {
+    public List<FoodFindAllResponse> findAllFood() {
         Member currentMember = memberUtil.getCurrentMember();
         List<FoodFindAllResponse> results = new ArrayList<>();
 
