@@ -31,13 +31,15 @@ public class FoodServiceTest {
 
     @BeforeEach
     void setUp() {
-        PrincipalDetails principal = new PrincipalDetails(1L, "USER");
+
+        Member member = Member.createNormalMember("nickname");
+        Member saveMember = memberRepository.save(member);
+
+        PrincipalDetails principal = new PrincipalDetails(saveMember.getId(), "USER");
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(
                         principal, null, principal.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Member member = Member.createNormalMember("nickname");
-        memberRepository.save(member);
     }
 
     @Test
