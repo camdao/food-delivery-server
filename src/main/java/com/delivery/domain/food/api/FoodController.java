@@ -24,10 +24,10 @@ public class FoodController {
 
     @Operation(summary = "create food", description = "create a food")
     @PostMapping
-    public ResponseEntity<FoodCreateRequest> foodCreate(
+    public ResponseEntity<FoodCreateResponse> foodCreate(
             @Valid @RequestBody FoodCreateRequest foodCreateRequest) {
         FoodCreateResponse foodCreateResponse = foodService.createFood(foodCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(foodCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(foodCreateResponse);
     }
 
     @Operation(summary = "find all food", description = "return list food")
