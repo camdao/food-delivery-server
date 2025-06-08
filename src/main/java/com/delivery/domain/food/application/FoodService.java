@@ -28,7 +28,8 @@ public class FoodService {
         // TO DO: handle image
         Member currentMember = memberUtil.getCurrentMember();
         Food food =
-                Food.createFood(foodCreaTeRequest.name(), foodCreaTeRequest.price(), currentMember);
+                Food.createFood(
+                        foodCreaTeRequest.name(), foodCreaTeRequest.describe(), currentMember);
         return FoodCreateResponse.from(foodRepository.save(food));
     }
 
@@ -51,7 +52,7 @@ public class FoodService {
                         .findById(foodId)
                         .orElseThrow(() -> new CustomException(ErrorCode.Mission_NOT_FOUND));
 
-        food.updateFood(updateRequest.name(), updateRequest.price(), updateRequest.status());
+        food.updateFood(updateRequest.name(), updateRequest.status());
         return FoodUpdateResponse.from(food);
     }
 }

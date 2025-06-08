@@ -48,7 +48,7 @@ public class FoodServiceTest {
     @Test
     void create_a_food() {
         // given
-        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", 1L);
+        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
 
         // when
         FoodCreateResponse food = foodService.createFood(foodCreateRequest);
@@ -56,20 +56,18 @@ public class FoodServiceTest {
         // then
         assertNotNull(food);
         assertEquals("name", food.name());
-        assertEquals(1L, food.price());
+        assertEquals(1L, food.describe());
     }
 
     @Test
     void find_all_food() {
         // given
         for (Long i = 0L; i < 5; i++) {
-            FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", i);
+            FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
             Food food =
                     foodRepository.save(
                             Food.createFood(
-                                    foodCreateRequest.name(),
-                                    foodCreateRequest.price(),
-                                    memberUtil.getCurrentMember()));
+                                    foodCreateRequest.name(), "", memberUtil.getCurrentMember()));
         }
 
         // when
@@ -78,21 +76,21 @@ public class FoodServiceTest {
         // then
         assertThat(foodList.size()).isEqualTo(5);
         assertThat(foodList)
-                .extracting("id", "name", "price")
+                .extracting("id", "name")
                 .containsExactlyInAnyOrder(
-                        tuple(1L, "name", 0L),
-                        tuple(2L, "name", 1L),
-                        tuple(3L, "name", 2L),
-                        tuple(4L, "name", 3L),
-                        tuple(5L, "name", 4L));
+                        tuple(1L, "name"),
+                        tuple(2L, "name"),
+                        tuple(3L, "name"),
+                        tuple(4L, "name"),
+                        tuple(5L, "name"));
     }
 
     @Test
     void update_a_food() {
         // given
         FoodUpdateRequest foodUpdateRequest =
-                new FoodUpdateRequest("name", 1L, FoodStatus.DISCONTINUED);
-        Food food = foodRepository.save(Food.createFood("name", 1L, memberUtil.getCurrentMember()));
+                new FoodUpdateRequest("name", "update describe", FoodStatus.DISCONTINUED);
+        Food food = foodRepository.save(Food.createFood("name", "", memberUtil.getCurrentMember()));
         // then
         FoodUpdateResponse foodUpdateResponse =
                 foodService.updateFood(foodUpdateRequest, food.getId());
