@@ -56,7 +56,7 @@ public class FoodServiceTest {
         // then
         assertNotNull(food);
         assertEquals("name", food.name());
-        assertEquals(1L, food.describe());
+        assertEquals("describe", food.describe());
     }
 
     @Test
