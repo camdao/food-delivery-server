@@ -53,7 +53,7 @@ public class FoodControllerTest {
         perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id").exists())
                 .andExpect(jsonPath("$.data.name").exists())
-                .andExpect(jsonPath("$.data.price").exists())
+                .andExpect(jsonPath("$.data.describe").exists())
                 .andDo(print());
     }
 
