@@ -36,10 +36,10 @@ public class FoodControllerTest {
     @Test
     void create_food() throws Exception {
         // given
-        FoodCreateRequest createRequest = new FoodCreateRequest("name", 1L);
+        FoodCreateRequest createRequest = new FoodCreateRequest("name", "describe");
 
         given(foodService.createFood(any()))
-                .willReturn(new FoodCreateResponse(1L, "name", 1L, FoodStatus.AVAILABLE));
+                .willReturn(new FoodCreateResponse(1L, "name", "describe", FoodStatus.AVAILABLE));
 
         // when, then
         ResultActions perform =
@@ -53,14 +53,14 @@ public class FoodControllerTest {
         perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id").exists())
                 .andExpect(jsonPath("$.data.name").exists())
-                .andExpect(jsonPath("$.data.price").exists())
+                .andExpect(jsonPath("$.data.describe").exists())
                 .andDo(print());
     }
 
     @Test
     void food_creation_name_cannot_be_null() throws Exception {
         // given
-        FoodCreateRequest createRequest = new FoodCreateRequest(null, 1L);
+        FoodCreateRequest createRequest = new FoodCreateRequest(null, "describe");
 
         // when, then
         ResultActions perform =

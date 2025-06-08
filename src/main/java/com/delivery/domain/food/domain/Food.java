@@ -1,8 +1,11 @@
 package com.delivery.domain.food.domain;
 
+import com.delivery.domain.foodDetail.domain.FoodDetail;
 import com.delivery.domain.member.domain.Member;
 import com.delivery.domain.model.BaseTimeEntity;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,38 +22,40 @@ public class Food extends BaseTimeEntity {
 
     private String name;
 
-    private Long price;
-
     private String foodImage;
+
+    private String describe;
+
+    @Enumerated(EnumType.STRING)
+    private FoodStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Enumerated(EnumType.STRING)
-    private FoodStatus status;
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    private List<FoodDetail> foodDetails = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Food(String name, Long price, String foodImage, FoodStatus status, Member member) {
+    private Food(String name, String foodImage, String describe, FoodStatus status, Member member) {
         this.name = name;
-        this.price = price;
         this.foodImage = foodImage;
         this.status = status;
+        this.describe = describe;
         this.member = member;
     }
 
-    public static Food createFood(String name, Long price, Member member) {
+    public static Food createFood(String name, String describe, Member member) {
         return Food.builder()
                 .name(name)
-                .price(price)
+                .describe(describe)
                 .status(FoodStatus.AVAILABLE)
                 .member(member)
                 .build();
     }
 
-    public void updateFood(String name, Long price, FoodStatus status) {
+    public void updateFood(String name, FoodStatus status) {
         this.name = name;
-        this.price = price;
         this.status = status;
     }
 }
