@@ -1,8 +1,8 @@
 package com.delivery.domain.foodDetail.api;
 
+import com.delivery.domain.foodDetail.application.FoodDetailService;
 import com.delivery.domain.foodDetail.dto.request.FoodDetailCreateResponse;
 import com.delivery.domain.foodDetail.dto.response.FoodDetailCreateRequest;
-import com.delivery.domain.foodDetail.service.FoodDetailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,6 @@ public class FoodDetailController {
     @Operation(summary = "create food detail", description = "create a detail food")
     @PostMapping("")
     public FoodDetailCreateResponse foodCreate(FoodDetailCreateRequest foodDetailCreateRequest) {
-        return foodDetailService.createFood(foodDetailCreateRequest);
+        return foodDetailService.createFoodDetail(foodDetailCreateRequest);
     }
 }
