@@ -19,8 +19,8 @@ public enum ErrorCode {
     // Member
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found."),
 
-    // mission
-    Mission_NOT_FOUND(HttpStatus.NOT_FOUND, "The mission could not be found.");
+    // food
+    Food_NOT_FOUND(HttpStatus.NOT_FOUND, "The food could not be found.");
     private final HttpStatus status;
     private final String message;
 }
