@@ -50,7 +50,7 @@ public class FoodService {
         Food food =
                 foodRepository
                         .findById(foodId)
-                        .orElseThrow(() -> new CustomException(ErrorCode.Mission_NOT_FOUND));
+                        .orElseThrow(() -> new CustomException(ErrorCode.Food_NOT_FOUND));
 
         food.updateFood(updateRequest.name(), updateRequest.status());
         return FoodUpdateResponse.from(food);

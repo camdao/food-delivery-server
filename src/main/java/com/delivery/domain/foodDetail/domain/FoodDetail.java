@@ -21,6 +21,9 @@ public class FoodDetail {
     @JoinColumn(name = "food_id")
     private Food food;
 
+    @Enumerated(EnumType.STRING)
+    private FoodDetailStatus status;
+
     @Builder(access = AccessLevel.PRIVATE)
     private FoodDetail(Long price, String size, Food food) {
         this.price = price;
@@ -30,5 +33,11 @@ public class FoodDetail {
 
     public static FoodDetail createFoodDetail(Long price, String size, Food food) {
         return FoodDetail.builder().price(price).size(size).food(food).build();
+    }
+
+    public void updateFoodDetail(Long price, String size, FoodDetailStatus status) {
+        this.price = price;
+        this.size = size;
+        this.status = status;
     }
 }

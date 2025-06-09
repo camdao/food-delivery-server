@@ -66,7 +66,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         authorize ->
                                 authorize
-                                        .requestMatchers("/10mm-actuator/**")
+                                        .requestMatchers("/delivery-actuator/**")
                                         .permitAll()
                                         .requestMatchers("/v1/**")
                                         .permitAll()
