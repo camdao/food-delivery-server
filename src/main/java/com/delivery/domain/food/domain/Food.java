@@ -1,5 +1,6 @@
 package com.delivery.domain.food.domain;
 
+import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.foodDetail.domain.FoodDetail;
 import com.delivery.domain.member.domain.Member;
 import com.delivery.domain.model.BaseTimeEntity;
@@ -35,6 +36,9 @@ public class Food extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
     private List<FoodDetail> foodDetails = new ArrayList<>();
+
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    private List<Category> categories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     private Food(String name, String foodImage, String describe, FoodStatus status, Member member) {
