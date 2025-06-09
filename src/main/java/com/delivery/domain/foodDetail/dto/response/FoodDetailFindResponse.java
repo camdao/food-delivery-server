@@ -1,4 +1,4 @@
-package com.delivery.domain.foodDetail.dto.request;
+package com.delivery.domain.foodDetail.dto.response;
 
 import com.delivery.domain.foodDetail.domain.FoodDetail;
 import io.swagger.v3.oas.annotations.media.Schema;
