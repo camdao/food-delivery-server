@@ -23,7 +23,10 @@ public enum ErrorCode {
     Food_NOT_FOUND(HttpStatus.NOT_FOUND, "The food could not be found."),
     FOOD_DETAIL_USER_MISMATCH(
             HttpStatus.FORBIDDEN,
-            "The user who created the mission and the logged in account do not match");
+            "The user who created the mission and the logged in account do not match"),
+
+    // category
+    Category_NOT_FOUND(HttpStatus.NOT_FOUND, "The category could not be found.");
 
     private final HttpStatus status;
     private final String message;

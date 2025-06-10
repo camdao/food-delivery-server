@@ -3,6 +3,7 @@ package com.delivery.domain.category.application;
 import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.category.dto.request.CategoryCreateRequest;
 import com.delivery.domain.category.dto.response.CategoryCreateResponse;
+import com.delivery.domain.category.dto.response.CategoryFindOneResponse;
 import com.delivery.domain.category.repository.CategoryRepository;
 import com.delivery.domain.food.dao.FoodRepository;
 import com.delivery.domain.food.domain.Food;
@@ -27,6 +28,16 @@ public class CategoryService {
         Category category =
                 categoryRepository.save(Category.createCategory(createRequest.name(), food));
 
-        return CategoryCreateResponse.form(food.getId(), category);
+        return CategoryCreateResponse.from(food.getId(), category);
+    }
+
+    @Transactional(readOnly = true)
+    public CategoryFindOneResponse findOneCategory(Long categoryId) {
+        Category category = categoryRepository.categoryFindOne(categoryId);
+        return CategoryFindOneResponse.from(category.getFood().getId(), category);
+    }
+
+    public void deleteCategory(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 }
