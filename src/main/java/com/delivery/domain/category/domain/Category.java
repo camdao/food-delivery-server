@@ -1,6 +1,5 @@
 package com.delivery.domain.category.domain;
 
-import com.delivery.domain.food.domain.Food;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +19,24 @@ public class Category {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status;
+
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
-    Category(String name, Food food) {
+    Category(String name, CategoryStatus status) {
         this.name = name;
+        this.status = status;
     }
 
     public static Category createCategory(String name) {
-        return Category.builder().name(name).build();
+        return Category.builder().name(name).status(CategoryStatus.ACTIVE).build();
+    }
+
+    public void updateCategory(String name, CategoryStatus status) {
+        this.name = name;
+        this.status = status;
     }
 }
