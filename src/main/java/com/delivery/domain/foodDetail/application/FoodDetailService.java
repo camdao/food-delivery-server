@@ -42,6 +42,7 @@ public class FoodDetailService {
         return FoodDetailCreateResponse.of(food.getId(), foodDetailSave);
     }
 
+    @Transactional(readOnly = true)
     public List<FoodDetailFindResponse> findFoodDetail(Long foodId) {
         Food food =
                 foodRepository
