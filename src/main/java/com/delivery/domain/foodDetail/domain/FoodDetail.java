@@ -25,14 +25,20 @@ public class FoodDetail {
     private FoodDetailStatus status;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private FoodDetail(Long price, String size, Food food) {
+    private FoodDetail(Long price, String size, Food food, FoodDetailStatus status) {
         this.price = price;
         this.size = size;
         this.food = food;
+        this.status = status;
     }
 
     public static FoodDetail createFoodDetail(Long price, String size, Food food) {
-        return FoodDetail.builder().price(price).size(size).food(food).build();
+        return FoodDetail.builder()
+                .price(price)
+                .size(size)
+                .food(food)
+                .status(FoodDetailStatus.AVAILABLE)
+                .build();
     }
 
     public void updateFoodDetail(Long price, String size, FoodDetailStatus status) {
