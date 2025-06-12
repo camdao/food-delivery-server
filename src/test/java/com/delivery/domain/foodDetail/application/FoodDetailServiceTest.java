@@ -9,7 +9,6 @@ import com.delivery.domain.food.dto.response.FoodCreateResponse;
 import com.delivery.domain.foodDetail.dto.request.FoodDetailCreateRequest;
 import com.delivery.domain.foodDetail.dto.response.FoodDetailCreateResponse;
 import com.delivery.domain.foodDetail.dto.response.FoodDetailFindResponse;
-import com.delivery.domain.foodDetail.respository.FoodDetailRepository;
 import com.delivery.domain.member.dao.MemberRepository;
 import com.delivery.domain.member.domain.Member;
 import com.delivery.global.config.security.PrincipalDetails;
@@ -29,8 +28,6 @@ public class FoodDetailServiceTest {
     @Autowired private FoodService foodService;
 
     @Autowired private FoodDetailService foodDetailService;
-
-    @Autowired private FoodDetailRepository foodDetailRepository;
 
     @BeforeEach
     void setUp() {
