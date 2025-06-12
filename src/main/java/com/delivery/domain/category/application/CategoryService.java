@@ -27,6 +27,7 @@ public class CategoryService {
         return CategoryCreateResponse.from(category);
     }
 
+    @Transactional(readOnly = true)
     public List<CategoryFindResponse> findCategory() {
         List<Category> categories = categoryRepository.categoryFindActive();
         return categories.stream().map(CategoryFindResponse::of).toList();
