@@ -27,4 +27,8 @@ public class RestaurantService {
         Restaurant restaurant = restaurantRepository.findRestaurantById(restaurantId);
         return RestaurantFindResponse.from(restaurant);
     }
+
+    public void deleteRestaurant(Long restaurantId) {
+        restaurantRepository.deleteById(restaurantId);
+    }
 }
