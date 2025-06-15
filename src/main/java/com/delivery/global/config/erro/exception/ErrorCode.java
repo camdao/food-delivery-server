@@ -26,7 +26,7 @@ public enum ErrorCode {
             "The user who created the mission and the logged in account do not match"),
 
     // category
-    Category_NOT_FOUND(HttpStatus.NOT_FOUND, "The category could not be found."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "The category could not be found."),
 
     // restaurant
     RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "The restaurant could not be found.");

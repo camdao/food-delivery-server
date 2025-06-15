@@ -38,7 +38,7 @@ public class CategoryService {
         Category category =
                 categoryRepository
                         .findById(categoryId)
-                        .orElseThrow(() -> new CustomException(ErrorCode.Category_NOT_FOUND));
+                        .orElseThrow(() -> new CustomException(ErrorCode.CATEGORY_NOT_FOUND));
         category.updateCategory(categoryUpdateRequest.name(), categoryUpdateRequest.status());
         return CategoryUpdateResponse.from(category);
     }

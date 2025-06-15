@@ -41,5 +41,12 @@ public class Restaurant {
         return Restaurant.builder().name(name).describe(describe).build();
     }
 
-    public void update(String name, String describe) {}
+    public void update(String name, String describe) {
+        this.name = name;
+        this.describe = describe;
+    }
+
+    public void updateCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 }
