@@ -40,4 +40,6 @@ public class Restaurant {
     public static Restaurant createRestaurant(String name, String describe) {
         return Restaurant.builder().name(name).describe(describe).build();
     }
+
+    public void update(String name, String describe) {}
 }
