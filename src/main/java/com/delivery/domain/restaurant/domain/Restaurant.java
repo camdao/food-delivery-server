@@ -1,6 +1,7 @@
 package com.delivery.domain.restaurant.domain;
 
-import com.delivery.domain.category.domain.Category;
+import com.delivery.domain.food.domain.Food;
+import com.delivery.domain.member.domain.Member;
 import jakarta.persistence.*;
 import java.util.List;
 import lombok.AccessLevel;
@@ -23,12 +24,12 @@ public class Restaurant {
 
     private String imgUrl;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "restaurant_category",
-            joinColumns = @JoinColumn(name = "restaurant_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+    @OneToMany(mappedBy = "restaurant")
+    private List<Food> foods;
+
+    @OneToOne
+    @JoinColumn(name = "owner_id")
+    private Member owner;
 
     @Builder
     public Restaurant(String name, String describe, String imgUrl) {
@@ -44,9 +45,5 @@ public class Restaurant {
     public void update(String name, String describe) {
         this.name = name;
         this.describe = describe;
-    }
-
-    public void updateCategories(List<Category> categories) {
-        this.categories = categories;
     }
 }

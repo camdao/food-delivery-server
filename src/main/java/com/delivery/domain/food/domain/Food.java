@@ -2,8 +2,8 @@ package com.delivery.domain.food.domain;
 
 import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.foodDetail.domain.FoodDetail;
-import com.delivery.domain.member.domain.Member;
 import com.delivery.domain.model.BaseTimeEntity;
+import com.delivery.domain.restaurant.domain.Restaurant;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,33 +30,27 @@ public class Food extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private FoodStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "food")
     private List<FoodDetail> foodDetails = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Food(String name, String foodImage, String describe, FoodStatus status, Member member) {
+    private Food(String name, String foodImage, String describe, FoodStatus status) {
         this.name = name;
         this.foodImage = foodImage;
         this.status = status;
         this.describe = describe;
-        this.member = member;
     }
 
-    public static Food createFood(String name, String describe, Member member) {
-        return Food.builder()
-                .name(name)
-                .describe(describe)
-                .status(FoodStatus.AVAILABLE)
-                .member(member)
-                .build();
+    public static Food createFood(String name, String describe) {
+        return Food.builder().name(name).describe(describe).status(FoodStatus.AVAILABLE).build();
     }
 
     public void updateFood(String name, FoodStatus status) {
