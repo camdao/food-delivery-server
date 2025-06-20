@@ -9,4 +9,7 @@ public record FoodCreateRequest(
                 String name,
         @NotNull(message = "Food describe cannot be blank.")
                 @Schema(description = "food describe", defaultValue = "default describe")
-                String describe) {}
+                String describe,
+        @NotNull(message = "category cannot be blank.")
+                @Schema(description = "category", defaultValue = "default category")
+                Long categoryId) {}

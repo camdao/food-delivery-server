@@ -1,4 +1,4 @@
-package com.delivery.domain.foodDetail.respository;
+package com.delivery.domain.foodDetail.dao;
 
 import static com.delivery.domain.foodDetail.domain.QFoodDetail.*;
 

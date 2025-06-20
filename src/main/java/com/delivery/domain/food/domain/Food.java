@@ -42,15 +42,30 @@ public class Food extends BaseTimeEntity {
     private Category category;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Food(String name, String foodImage, String describe, FoodStatus status) {
+    private Food(
+            String name,
+            String foodImage,
+            String describe,
+            FoodStatus status,
+            Restaurant restaurant,
+            Category category) {
         this.name = name;
         this.foodImage = foodImage;
         this.status = status;
         this.describe = describe;
+        this.restaurant = restaurant;
+        this.category = category;
     }
 
-    public static Food createFood(String name, String describe) {
-        return Food.builder().name(name).describe(describe).status(FoodStatus.AVAILABLE).build();
+    public static Food createFood(
+            String name, String describe, Category category, Restaurant restaurant) {
+        return Food.builder()
+                .name(name)
+                .describe(describe)
+                .status(FoodStatus.AVAILABLE)
+                .category(category)
+                .restaurant(restaurant)
+                .build();
     }
 
     public void updateFood(String name, FoodStatus status) {

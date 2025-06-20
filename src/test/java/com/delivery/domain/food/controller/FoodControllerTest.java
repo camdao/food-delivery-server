@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.food.api.FoodController;
 import com.delivery.domain.food.application.FoodService;
 import com.delivery.domain.food.domain.FoodStatus;
@@ -36,7 +37,9 @@ public class FoodControllerTest {
     @Test
     void create_food() throws Exception {
         // given
-        FoodCreateRequest createRequest = new FoodCreateRequest("name", "describe");
+        Category category = Category.createCategory("name");
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
 
         given(foodService.createFood(any()))
                 .willReturn(new FoodCreateResponse(1L, "name", "describe", FoodStatus.AVAILABLE));
@@ -48,7 +51,7 @@ public class FoodControllerTest {
                                 .accept(APPLICATION_JSON)
                                 .contentType(APPLICATION_JSON)
                                 .with(csrf())
-                                .content(objectMapper.writeValueAsString(createRequest)));
+                                .content(objectMapper.writeValueAsString(foodCreateRequest)));
 
         perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id").exists())
@@ -60,7 +63,9 @@ public class FoodControllerTest {
     @Test
     void food_creation_name_cannot_be_null() throws Exception {
         // given
-        FoodCreateRequest createRequest = new FoodCreateRequest(null, "describe");
+        Category category = Category.createCategory("name");
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
 
         // when, then
         ResultActions perform =
@@ -69,7 +74,7 @@ public class FoodControllerTest {
                                 .accept(APPLICATION_JSON)
                                 .contentType(APPLICATION_JSON)
                                 .with(csrf())
-                                .content(objectMapper.writeValueAsString(createRequest)));
+                                .content(objectMapper.writeValueAsString(foodCreateRequest)));
 
         perform.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))

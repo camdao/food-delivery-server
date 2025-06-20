@@ -3,6 +3,7 @@ package com.delivery.domain.foodDetail.application;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.food.application.FoodService;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
 import com.delivery.domain.food.dto.response.FoodCreateResponse;
@@ -45,7 +46,10 @@ public class FoodDetailServiceTest {
     @Test
     void create_a_food() {
         // given
-        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
+        Category category = Category.createCategory("name");
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
+
         FoodCreateResponse food = foodService.createFood(foodCreateRequest);
         FoodDetailCreateRequest foodDetailCreateRequest =
                 new FoodDetailCreateRequest(1L, "xs", food.id());
@@ -61,7 +65,9 @@ public class FoodDetailServiceTest {
     @Test
     void test_find_food_detail() {
         // given
-        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
+        Category category = Category.createCategory("name");
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
         FoodCreateResponse food = foodService.createFood(foodCreateRequest);
 
         for (Long i = 0L; i < 5; i++) {

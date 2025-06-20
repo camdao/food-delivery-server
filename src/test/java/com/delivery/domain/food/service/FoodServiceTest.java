@@ -3,9 +3,9 @@ package com.delivery.domain.food.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.delivery.domain.category.domain.Category;
 import com.delivery.domain.food.application.FoodService;
 import com.delivery.domain.food.dao.FoodRepository;
-import com.delivery.domain.food.domain.Food;
 import com.delivery.domain.food.domain.FoodStatus;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
 import com.delivery.domain.food.dto.request.FoodUpdateRequest;
@@ -48,7 +48,9 @@ public class FoodServiceTest {
     @Test
     void create_a_food() {
         // given
-        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
+        Category category = Category.createCategory("name");
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
 
         // when
         FoodCreateResponse food = foodService.createFood(foodCreateRequest);
@@ -62,12 +64,11 @@ public class FoodServiceTest {
     @Test
     void find_all_food() {
         // given
+        Category category = Category.createCategory("name");
         for (Long i = 0L; i < 5; i++) {
-            FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe");
-            Food food =
-                    foodRepository.save(
-                            Food.createFood(
-                                    foodCreateRequest.name(), "", memberUtil.getCurrentMember()));
+            FoodCreateRequest foodCreateRequest =
+                    new FoodCreateRequest("name", "describe", category.getId());
+            foodService.createFood(foodCreateRequest);
         }
 
         // when
@@ -90,10 +91,18 @@ public class FoodServiceTest {
         // given
         FoodUpdateRequest foodUpdateRequest =
                 new FoodUpdateRequest("name", "update describe", FoodStatus.DISCONTINUED);
-        Food food = foodRepository.save(Food.createFood("name", "", memberUtil.getCurrentMember()));
+
+        Category category = Category.createCategory("name");
+
+        FoodCreateRequest foodCreateRequest =
+                new FoodCreateRequest("name", "describe", category.getId());
+
+        FoodCreateResponse foodCreateResponse = foodService.createFood(foodCreateRequest);
+
         // then
         FoodUpdateResponse foodUpdateResponse =
-                foodService.updateFood(foodUpdateRequest, food.getId());
+                foodService.updateFood(foodUpdateRequest, foodCreateResponse.id());
+
         // when
         assertNotNull(foodUpdateResponse);
         assertEquals(FoodStatus.DISCONTINUED, foodUpdateResponse.status());
