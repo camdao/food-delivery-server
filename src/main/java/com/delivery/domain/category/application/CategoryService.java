@@ -7,7 +7,6 @@ import com.delivery.domain.category.dto.response.CategoryCreateResponse;
 import com.delivery.domain.category.dto.response.CategoryFindResponse;
 import com.delivery.domain.category.dto.response.CategoryUpdateResponse;
 import com.delivery.domain.category.repository.CategoryRepository;
-import com.delivery.domain.food.dao.FoodRepository;
 import com.delivery.global.config.erro.exception.CustomException;
 import com.delivery.global.config.erro.exception.ErrorCode;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final FoodRepository foodRepository;
 
     public CategoryCreateResponse createCategory(CategoryCreateRequest createRequest) {
         Category category = categoryRepository.save(Category.createCategory(createRequest.name()));
