@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.delivery.domain.category.domain.Category;
+import com.delivery.domain.category.repository.CategoryRepository;
 import com.delivery.domain.food.application.FoodService;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
 import com.delivery.domain.food.dto.response.FoodCreateResponse;
@@ -12,6 +13,8 @@ import com.delivery.domain.foodDetail.dto.response.FoodDetailCreateResponse;
 import com.delivery.domain.foodDetail.dto.response.FoodDetailFindResponse;
 import com.delivery.domain.member.dao.MemberRepository;
 import com.delivery.domain.member.domain.Member;
+import com.delivery.domain.restaurant.application.RestaurantService;
+import com.delivery.domain.restaurant.dto.request.RestaurantCreateRequest;
 import com.delivery.global.config.security.PrincipalDetails;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +33,10 @@ public class FoodDetailServiceTest {
 
     @Autowired private FoodDetailService foodDetailService;
 
+    @Autowired private RestaurantService restaurantService;
+
+    @Autowired private CategoryRepository categoryRepository;
+
     @BeforeEach
     void setUp() {
 
@@ -46,7 +53,8 @@ public class FoodDetailServiceTest {
     @Test
     void create_a_food() {
         // given
-        Category category = Category.createCategory("name");
+        Category category = categoryRepository.save(Category.createCategory("name"));
+        restaurantService.createRestaurant(new RestaurantCreateRequest("name", "describe"));
         FoodCreateRequest foodCreateRequest =
                 new FoodCreateRequest("name", "describe", category.getId());
 
@@ -65,7 +73,10 @@ public class FoodDetailServiceTest {
     @Test
     void test_find_food_detail() {
         // given
-        Category category = Category.createCategory("name");
+        Category category = categoryRepository.save(Category.createCategory("name"));
+
+        restaurantService.createRestaurant(new RestaurantCreateRequest("name", "describe"));
+
         FoodCreateRequest foodCreateRequest =
                 new FoodCreateRequest("name", "describe", category.getId());
         FoodCreateResponse food = foodService.createFood(foodCreateRequest);

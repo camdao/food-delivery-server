@@ -37,9 +37,7 @@ public class FoodControllerTest {
     @Test
     void create_food() throws Exception {
         // given
-        Category category = Category.createCategory("name");
-        FoodCreateRequest foodCreateRequest =
-                new FoodCreateRequest("name", "describe", category.getId());
+        FoodCreateRequest foodCreateRequest = new FoodCreateRequest("name", "describe", 1L);
 
         given(foodService.createFood(any()))
                 .willReturn(new FoodCreateResponse(1L, "name", "describe", FoodStatus.AVAILABLE));

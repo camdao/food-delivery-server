@@ -32,14 +32,15 @@ public class Restaurant {
     private Member owner;
 
     @Builder
-    public Restaurant(String name, String describe, String imgUrl) {
+    public Restaurant(String name, String describe, String imgUrl, Member owner) {
         this.name = name;
         this.describe = describe;
         this.imgUrl = imgUrl;
+        this.owner = owner;
     }
 
-    public static Restaurant createRestaurant(String name, String describe) {
-        return Restaurant.builder().name(name).describe(describe).build();
+    public static Restaurant createRestaurant(String name, String describe, Member owner) {
+        return Restaurant.builder().name(name).describe(describe).owner(owner).build();
     }
 
     public void update(String name, String describe) {

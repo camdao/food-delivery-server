@@ -35,6 +35,10 @@ public class FoodService {
         Member currentMember = memberUtil.getCurrentMember();
         Restaurant restaurant = restaurantRepository.findByOwnerId(currentMember.getId());
 
+        if (restaurant == null) {
+            throw new CustomException(ErrorCode.RESTAURANT_NOT_FOUND);
+        }
+
         Category category =
                 categoryRepository
                         .findById(foodCreaTeRequest.categoryId())

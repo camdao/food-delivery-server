@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.delivery.domain.category.domain.Category;
+import com.delivery.domain.category.repository.CategoryRepository;
 import com.delivery.domain.food.application.FoodService;
-import com.delivery.domain.food.dao.FoodRepository;
 import com.delivery.domain.food.domain.FoodStatus;
 import com.delivery.domain.food.dto.request.FoodCreateRequest;
 import com.delivery.domain.food.dto.request.FoodUpdateRequest;
@@ -14,8 +14,9 @@ import com.delivery.domain.food.dto.response.FoodFindAllResponse;
 import com.delivery.domain.food.dto.response.FoodUpdateResponse;
 import com.delivery.domain.member.dao.MemberRepository;
 import com.delivery.domain.member.domain.Member;
+import com.delivery.domain.restaurant.application.RestaurantService;
+import com.delivery.domain.restaurant.dto.request.RestaurantCreateRequest;
 import com.delivery.global.config.security.PrincipalDetails;
-import com.delivery.global.util.MemberUtil;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,8 +30,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class FoodServiceTest {
     @Autowired private MemberRepository memberRepository;
     @Autowired private FoodService foodService;
-    @Autowired private FoodRepository foodRepository;
-    @Autowired private MemberUtil memberUtil;
+    @Autowired private CategoryRepository categoryRepository;
+    @Autowired private RestaurantService restaurantService;
 
     @BeforeEach
     void setUp() {
@@ -48,7 +49,8 @@ public class FoodServiceTest {
     @Test
     void create_a_food() {
         // given
-        Category category = Category.createCategory("name");
+        Category category = categoryRepository.save(Category.createCategory("name"));
+        restaurantService.createRestaurant(new RestaurantCreateRequest("name", "describe"));
         FoodCreateRequest foodCreateRequest =
                 new FoodCreateRequest("name", "describe", category.getId());
 
@@ -59,12 +61,15 @@ public class FoodServiceTest {
         assertNotNull(food);
         assertEquals("name", food.name());
         assertEquals("describe", food.describe());
+        assertEquals(FoodStatus.AVAILABLE, food.status());
     }
 
     @Test
     void find_all_food() {
         // given
-        Category category = Category.createCategory("name");
+        Category category = categoryRepository.save(Category.createCategory("name"));
+        restaurantService.createRestaurant(new RestaurantCreateRequest("name", "describe"));
+
         for (Long i = 0L; i < 5; i++) {
             FoodCreateRequest foodCreateRequest =
                     new FoodCreateRequest("name", "describe", category.getId());
@@ -92,7 +97,8 @@ public class FoodServiceTest {
         FoodUpdateRequest foodUpdateRequest =
                 new FoodUpdateRequest("name", "update describe", FoodStatus.DISCONTINUED);
 
-        Category category = Category.createCategory("name");
+        Category category = categoryRepository.save(Category.createCategory("name"));
+        restaurantService.createRestaurant(new RestaurantCreateRequest("name", "describe"));
 
         FoodCreateRequest foodCreateRequest =
                 new FoodCreateRequest("name", "describe", category.getId());
