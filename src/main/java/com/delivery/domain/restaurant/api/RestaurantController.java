@@ -39,10 +39,4 @@ public class RestaurantController {
             @Valid @RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
         return restaurantService.updateRestaurant(restaurantId, restaurantUpdateRequest);
     }
-
-    @Operation(summary = "delete restaurant", description = "delete restaurant")
-    @DeleteMapping("/{restaurantId}")
-    public void deleteRestaurant(@PathVariable Long restaurantId) {
-        restaurantService.deleteRestaurant(restaurantId);
-    }
 }
