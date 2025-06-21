@@ -15,12 +15,16 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 
     @Override
     public Restaurant findRestaurantById(Long id) {
-        return jpaQueryFactory
-                .selectFrom(restaurant)
-                .where(restaurantIdEq(id))
-                .join(restaurant.categories)
-                .fetchJoin()
-                .fetchOne();
+        return jpaQueryFactory.selectFrom(restaurant).where(restaurantIdEq(id)).fetchOne();
+    }
+
+    @Override
+    public Restaurant findByOwnerId(Long ownerId) {
+        return jpaQueryFactory.selectFrom(restaurant).where(restaurantOwnerEq(ownerId)).fetchOne();
+    }
+
+    private BooleanExpression restaurantOwnerEq(Long ownerId) {
+        return restaurant.owner.id.eq(ownerId);
     }
 
     private BooleanExpression restaurantIdEq(Long id) {

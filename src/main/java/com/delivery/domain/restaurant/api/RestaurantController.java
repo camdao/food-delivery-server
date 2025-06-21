@@ -2,11 +2,9 @@ package com.delivery.domain.restaurant.api;
 
 import com.delivery.domain.restaurant.application.RestaurantService;
 import com.delivery.domain.restaurant.dto.request.RestaurantCreateRequest;
-import com.delivery.domain.restaurant.dto.request.RestaurantUpdateCategoryRequest;
 import com.delivery.domain.restaurant.dto.request.RestaurantUpdateRequest;
 import com.delivery.domain.restaurant.dto.response.RestaurantCreateResponse;
 import com.delivery.domain.restaurant.dto.response.RestaurantFindResponse;
-import com.delivery.domain.restaurant.dto.response.RestaurantUpdateCategoryResponse;
 import com.delivery.domain.restaurant.dto.response.RestaurantUpdateResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,17 +38,6 @@ public class RestaurantController {
             @PathVariable Long restaurantId,
             @Valid @RequestBody RestaurantUpdateRequest restaurantUpdateRequest) {
         return restaurantService.updateRestaurant(restaurantId, restaurantUpdateRequest);
-    }
-
-    @Operation(
-            summary = "update list category restaurant",
-            description = "update list category restaurant")
-    @PostMapping("/updateCategory/{restaurantId}")
-    public RestaurantUpdateCategoryResponse restaurantCategoryUpdate(
-            @PathVariable Long restaurantId,
-            @Valid @RequestBody RestaurantUpdateCategoryRequest restaurantUpdateCategoryRequest) {
-        return restaurantService.updateCategoryRestaurant(
-                restaurantId, restaurantUpdateCategoryRequest);
     }
 
     @Operation(summary = "delete restaurant", description = "delete restaurant")

@@ -1,11 +1,9 @@
 package com.delivery.domain.member.domain;
 
-import com.delivery.domain.food.domain.Food;
 import com.delivery.domain.model.BaseTimeEntity;
+import com.delivery.domain.restaurant.domain.Restaurant;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,8 +38,8 @@ public class Member extends BaseTimeEntity {
 
     private LocalDateTime lastLoginAt;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Food> foods = new ArrayList<>();
+    @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Restaurant restaurant;
 
     @Builder(access = AccessLevel.PRIVATE)
     private Member(

@@ -20,7 +20,11 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found."),
 
     // food
-    Food_NOT_FOUND(HttpStatus.NOT_FOUND, "The food could not be found."),
+    FOOD_NOT_FOUND(HttpStatus.NOT_FOUND, "The food could not be found."),
+    FOOD_DETAIL_RESTAURANT_MISMATCH(
+            HttpStatus.FORBIDDEN,
+            "The user who created the mission and the logged in account do not match"),
+    // food detail
     FOOD_DETAIL_USER_MISMATCH(
             HttpStatus.FORBIDDEN,
             "The user who created the mission and the logged in account do not match"),
