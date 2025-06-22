@@ -27,6 +27,11 @@ public class RestaurantService {
     public RestaurantCreateResponse createRestaurant(
             RestaurantCreateRequest restaurantCreateRequest) {
         Member currentMember = memberUtil.getCurrentMember();
+        Restaurant restaurantCheck = restaurantRepository.findByOwnerId(currentMember.getId());
+        if (restaurantCheck != null) {
+            throw new CustomException(ErrorCode.MEMBER_EXITS_RESTAURANT);
+        }
+
         Restaurant restaurant =
                 Restaurant.createRestaurant(
                         restaurantCreateRequest.name(),
@@ -37,24 +42,32 @@ public class RestaurantService {
 
     @Transactional(readOnly = true)
     public RestaurantFindResponse findRestaurant(Long restaurantId) {
+        Member currentMember = memberUtil.getCurrentMember();
         Restaurant restaurant = restaurantRepository.findRestaurantById(restaurantId);
+
+        validateRestaurantUserMismatch(restaurant, currentMember);
         return RestaurantFindResponse.from(restaurant);
     }
 
     public RestaurantUpdateResponse updateRestaurant(
             Long restaurantId, RestaurantUpdateRequest restaurantUpdateRequest) {
 
+        Member currentMember = memberUtil.getCurrentMember();
+
         Restaurant restaurant =
                 restaurantRepository
                         .findById(restaurantId)
                         .orElseThrow(() -> new CustomException(ErrorCode.RESTAURANT_NOT_FOUND));
+        validateRestaurantUserMismatch(restaurant, currentMember);
 
         restaurant.update(restaurantUpdateRequest.name(), restaurantUpdateRequest.describe());
 
         return RestaurantUpdateResponse.from(restaurant);
     }
 
-    public void deleteRestaurant(Long restaurantId) {
-        restaurantRepository.deleteById(restaurantId);
+    private void validateRestaurantUserMismatch(Restaurant restaurant, Member member) {
+        if (!restaurant.getId().equals(member.getRestaurant().getId())) {
+            throw new CustomException(ErrorCode.RESTAURANT_MEMBER_MISMATCH);
+        }
     }
 }

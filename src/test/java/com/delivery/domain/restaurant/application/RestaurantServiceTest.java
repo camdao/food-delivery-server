@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.delivery.domain.member.dao.MemberRepository;
 import com.delivery.domain.member.domain.Member;
 import com.delivery.domain.restaurant.dto.request.RestaurantCreateRequest;
+import com.delivery.domain.restaurant.dto.request.RestaurantUpdateRequest;
 import com.delivery.domain.restaurant.dto.response.RestaurantCreateResponse;
+import com.delivery.domain.restaurant.dto.response.RestaurantFindResponse;
+import com.delivery.domain.restaurant.dto.response.RestaurantUpdateResponse;
 import com.delivery.global.config.security.PrincipalDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,5 +48,38 @@ public class RestaurantServiceTest {
 
         // then
         assertEquals(restaurantCreateRequest.name(), restaurantCreateResponse.name());
+    }
+
+    @Test
+    void find_a_restaurant() {
+        // given
+        RestaurantCreateRequest restaurantCreateRequest =
+                new RestaurantCreateRequest("name", "describe");
+        RestaurantCreateResponse restaurantCreateResponse =
+                restaurantService.createRestaurant(restaurantCreateRequest);
+
+        // when
+        RestaurantFindResponse restaurantFindResponse =
+                restaurantService.findRestaurant(restaurantCreateResponse.id());
+        // then
+        assertEquals(restaurantFindResponse.name(), restaurantCreateResponse.name());
+    }
+
+    @Test
+    void update_a_restaurant() {
+        // given
+        RestaurantCreateRequest restaurantCreateRequest =
+                new RestaurantCreateRequest("name", "describe");
+        RestaurantCreateResponse restaurantCreateResponse =
+                restaurantService.createRestaurant(restaurantCreateRequest);
+
+        RestaurantUpdateRequest restaurantUpdateRequest =
+                new RestaurantUpdateRequest("name update", "describe update");
+        // when
+        RestaurantUpdateResponse restaurantUpdateResponse =
+                restaurantService.updateRestaurant(
+                        restaurantCreateResponse.id(), restaurantUpdateRequest);
+        // then
+        assertEquals(restaurantUpdateResponse.name(), restaurantUpdateRequest.name());
     }
 }

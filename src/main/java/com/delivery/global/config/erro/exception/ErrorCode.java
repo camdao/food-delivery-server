@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     // Member
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "The member you are looking for could not be found."),
+    MEMBER_EXITS_RESTAURANT(HttpStatus.NOT_FOUND, "members already exist restaurant."),
 
     // food
     FOOD_NOT_FOUND(HttpStatus.NOT_FOUND, "The food could not be found."),
@@ -33,8 +34,10 @@ public enum ErrorCode {
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "The category could not be found."),
 
     // restaurant
-    RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "The restaurant could not be found.");
-
+    RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "The restaurant could not be found."),
+    RESTAURANT_MEMBER_MISMATCH(
+            HttpStatus.FORBIDDEN,
+            "The user who created the restaurant and the logged in account do not match");
     private final HttpStatus status;
     private final String message;
 }
