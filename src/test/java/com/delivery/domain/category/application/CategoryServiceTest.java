@@ -4,9 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.delivery.domain.category.domain.CategoryStatus;
 import com.delivery.domain.category.dto.request.CategoryCreateRequest;
+import com.delivery.domain.category.dto.request.CategoryUpdateRequest;
 import com.delivery.domain.category.dto.response.CategoryCreateResponse;
 import com.delivery.domain.category.dto.response.CategoryFindResponse;
+import com.delivery.domain.category.dto.response.CategoryUpdateResponse;
 import com.delivery.domain.category.repository.CategoryRepository;
 import com.delivery.domain.food.application.FoodService;
 import java.util.List;
@@ -51,5 +54,23 @@ public class CategoryServiceTest {
         assertThat(categoryList)
                 .extracting("id", "name")
                 .containsExactlyInAnyOrder(tuple(categoryCreateResponse.id(), "name"));
+    }
+
+    @Test
+    void update_a_category() {
+        // given
+        CategoryCreateRequest createRequest = new CategoryCreateRequest("name");
+        CategoryCreateResponse categoryCreateResponse =
+                categoryService.createCategory(createRequest);
+
+        CategoryUpdateRequest updateRequest =
+                new CategoryUpdateRequest("nameUpdate", CategoryStatus.ACTIVE);
+
+        // when
+        CategoryUpdateResponse categoryUpdateResponse =
+                categoryService.updateCategory(categoryCreateResponse.id(), updateRequest);
+
+        // then
+        assertEquals("nameUpdate", categoryUpdateResponse.name());
     }
 }
