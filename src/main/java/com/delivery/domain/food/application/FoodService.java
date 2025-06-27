@@ -30,7 +30,7 @@ public class FoodService {
     private final CategoryRepository categoryRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public FoodCreateResponse createFood(FoodCreateRequest foodCreaTeRequest) {
+    public FoodCreateResponse createFood(FoodCreateRequest foodCreateRequest) {
         // TO DO: handle image
         Member currentMember = memberUtil.getCurrentMember();
         Restaurant restaurant = restaurantRepository.findByOwnerId(currentMember.getId());
@@ -41,13 +41,13 @@ public class FoodService {
 
         Category category =
                 categoryRepository
-                        .findById(foodCreaTeRequest.categoryId())
+                        .findById(foodCreateRequest.categoryId())
                         .orElseThrow(() -> new CustomException(ErrorCode.FOOD_NOT_FOUND));
 
         Food food =
                 Food.createFood(
-                        foodCreaTeRequest.name(),
-                        foodCreaTeRequest.describe(),
+                        foodCreateRequest.name(),
+                        foodCreateRequest.describe(),
                         category,
                         restaurant);
 
